@@ -24,7 +24,49 @@ jobs:
 
       - name: Build Astro
         run: npm run build
-        # Genera la carpeta dist/ con el sitio estático
+
+      - name: Fix paths para subdirectorio
+        run: |
+          python3 - << 'PYEOF'
+          import os, re
+
+          dist = './dist'
+          for dirpath, _, files in os.walk(dist):
+            for fname in files:
+              fpath = os.path.join(dirpath, fname)
+              ext = fname.rsplit('.', 1)[-1] if '.' in fname else ''
+
+              if ext == 'html':
+                with open(fpath, encoding='utf-8') as f:
+                  txt = f.read()
+                # src="/...  →  src="./...
+                txt = re.sub(r'src="/((?!/|http))', r'src="./\1', txt)
+                # href="/_astro/  →  href="./_astro/
+                txt = re.sub(r'href="/_astro/', r'href="./_astro/', txt)
+                with open(fpath, 'w', encoding='utf-8') as f:
+                  f.write(txt)
+
+              elif ext == 'css':
+                with open(fpath, encoding='utf-8') as f:
+                  txt = f.read()
+                # url(/hero-backgrounds/  →  url(../hero-backgrounds/  (CSS está en _astro/)
+                txt = re.sub(r'url\(/((?!/|http))', r'url(../\1', txt)
+                txt = re.sub(r"url\('/((?!/|http))", r"url('../\1", txt)
+                txt = re.sub(r'url\("/((?!/|http))', r'url("../\1', txt)
+                # /_astro/  →  ./_astro/
+                txt = txt.replace('/_astro/', './_astro/')
+                with open(fpath, 'w', encoding='utf-8') as f:
+                  f.write(txt)
+
+              elif ext == 'js':
+                with open(fpath, encoding='utf-8') as f:
+                  txt = f.read()
+                txt = txt.replace('/_astro/', './_astro/')
+                with open(fpath, 'w', encoding='utf-8') as f:
+                  f.write(txt)
+
+          print('Paths fixed.')
+          PYEOF
 
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
