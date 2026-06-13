@@ -23,14 +23,9 @@ jobs:
         run: npm ci
 
       - name: Build Astro
+        # npm run build incluye scripts/relativize.mjs, que deja los assets
+        # con ruta relativa por página y los enlaces de menú absolutos.
         run: npm run build
-
-      - name: Fix paths para subdirectorio
-        run: |
-          find ./dist -name "*.html" -exec sed -i 's|/_astro/|./_astro/|g' {} \;
-          find ./dist -name "*.html" -exec sed -i 's|src="/hero-backgrounds/|src="./hero-backgrounds/|g' {} \;
-          find ./dist -name "*.css"  -exec sed -i 's|/_astro/|./_astro/|g' {} \;
-          find ./dist -name "*.js"   -exec sed -i 's|/_astro/|./_astro/|g' {} \;
 
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
