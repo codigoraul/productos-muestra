@@ -33,4 +33,6 @@ jobs:
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASS }}
           local-dir: ./dist/
-          server-dir: /public_html/productos-muestra/
+          # El usuario FTP ya inicia dentro de /home/disenop2/public_html,
+          # por lo que indicamos solo la carpeta destino real para evitar duplicar public_html
+          server-dir: ./productos-muestra/
