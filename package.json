@@ -1,0 +1,14 @@
+{
+  "name": "tienda-demo-astro",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Web de muestra: tienda de tecnología moderna con buscador, filtros y carrito. Lista para conectar a WordPress headless.",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "astro": "^5.0.0"
+  }
+}

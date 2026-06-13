@@ -1,0 +1,73 @@
+---
+import Icon from './Icon.astro';
+---
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <a href="/" class="logo"><span class="logo-icon">N</span> Nova<em>Tech</em></a>
+      <p>Tu tienda de tecnología de confianza. Los mejores gadgets con envío gratis en 24h y garantía extendida.</p>
+      <div class="socials">
+        <a href="#" aria-label="Instagram"><Icon name="instagram" size={17} /></a>
+        <a href="#" aria-label="X / Twitter"><Icon name="x" size={16} /></a>
+        <a href="#" aria-label="YouTube"><Icon name="youtube" size={18} /></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Navegación</h4>
+      <a href="/">Inicio</a>
+      <a href="/nosotros/">Nosotros</a>
+      <a href="/productos/">Productos</a>
+      <a href="/categorias/">Categorías</a>
+      <a href="/contacto/">Contacto</a>
+    </div>
+    <div class="footer-col">
+      <h4>Ayuda</h4>
+      <a href="/contacto/">Envíos y entregas</a>
+      <a href="/contacto/">Devoluciones</a>
+      <a href="/contacto/">Preguntas frecuentes</a>
+      <a href="/contacto/">Garantía</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contacto</h4>
+      <span class="contact-line"><Icon name="map-pin" size={15} /> Calle Mayor 123, Madrid</span>
+      <span class="contact-line"><Icon name="phone" size={15} /> 900 123 456</span>
+      <span class="contact-line"><Icon name="mail" size={15} /> hola@novatech.demo</span>
+      <span class="contact-line"><Icon name="clock" size={15} /> Lun–Vie 9:00–18:00</span>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>© 2026 NovaTech — Sitio de demostración</span>
+    <span>Hecho con Astro · Listo para WordPress headless</span>
+  </div>
+</footer>
+
+<style>
+  .footer { margin-top: 90px; background: var(--bg-soft); border-top: 1px solid var(--border); padding: 54px 0 28px; }
+  .footer-inner { display: grid; grid-template-columns: 2fr 1fr 1fr 1.3fr; gap: 36px; }
+  .logo { display: flex; align-items: center; gap: 9px; font-size: 1.2rem; font-weight: 800; text-decoration: none; }
+  .logo em { font-style: normal; color: var(--accent); }
+  .logo-icon {
+    display: grid; place-items: center; width: 34px; height: 34px;
+    background: var(--accent); color: #fff; border-radius: 10px; font-size: 1rem;
+  }
+  .footer-brand p { margin-top: 14px; color: var(--text-dim); font-size: 0.88rem; line-height: 1.6; max-width: 300px; }
+  .socials { display: flex; gap: 10px; margin-top: 16px; }
+  .socials a {
+    display: grid; place-items: center; width: 36px; height: 36px;
+    background: #fff; border: 1px solid var(--border); border-radius: 10px;
+    text-decoration: none; transition: all 0.15s;
+  }
+  .socials a:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .footer-col { display: flex; flex-direction: column; gap: 10px; }
+  .footer-col h4 { font-size: 0.95rem; font-weight: 800; margin-bottom: 4px; }
+  .footer-col a, .footer-col span { color: var(--text-dim); text-decoration: none; font-size: 0.88rem; }
+  .contact-line { display: inline-flex; align-items: center; gap: 8px; }
+  .contact-line :global(svg) { color: var(--accent); flex-shrink: 0; }
+  .footer-col a:hover { color: var(--accent); }
+  .footer-bottom {
+    margin-top: 44px; padding-top: 20px; border-top: 1px solid var(--border);
+    color: var(--text-dim); font-size: 0.8rem;
+    display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap;
+  }
+  @media (max-width: 800px) { .footer-inner { grid-template-columns: 1fr 1fr; } }
+</style>

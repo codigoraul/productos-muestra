@@ -1,0 +1,353 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import ProductCard from '../components/ProductCard.astro';
+import CartDrawer from '../components/CartDrawer.astro';
+import Footer from '../components/Footer.astro';
+import Icon from '../components/Icon.astro';
+import { products, categoryInfo, PLACEHOLDER } from '../data/products.js';
+
+const destacados = [...products].sort((a, b) => b.rating - a.rating).slice(0, 8);
+
+// Slides del hero — una por categoría destacada
+const heroSlides = [
+  {
+    cat: 'Audio', icon: 'sparkles', tag: 'Nueva colección 2026',
+    title: 'Sonido que', em: 'te envuelve',
+    desc: 'Auriculares y altavoces premium con cancelación de ruido y sonido Hi-Res. Siente cada nota como nunca.',
+    bg: '/hero-backgrounds/slider-1.webp',
+    img: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1100&q=80',
+    alt: 'Auriculares premium sobre fondo amarillo',
+    prod: 'Auriculares Aurora Pro', price: '$139.990', oldPrice: '$189.990',
+  },
+  {
+    cat: 'Gaming', icon: 'zap', tag: 'Setup gamer',
+    title: 'Equipa tu', em: 'setup ganador',
+    desc: 'Monitores de 165 Hz, teclados mecánicos y ratones de precisión profesional. Todo lo que necesitas para ganar.',
+    bg: '/hero-backgrounds/slider-2.webp',
+    img: 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=1100&q=80',
+    alt: 'Escritorio gaming con monitor',
+    prod: 'Monitor Curvo Galaxy 34"', price: '$619.990', oldPrice: null,
+  },
+  {
+    cat: 'Relojes', icon: 'star', tag: 'Lo más vendido',
+    title: 'Tecnología que', em: 'te acompaña',
+    desc: 'Smartwatches con GPS, monitoreo de salud 24/7 y hasta 14 días de batería. Tu vida, mejor medida.',
+    bg: '/hero-backgrounds/slider-3.webp',
+    img: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1100&q=80',
+    alt: 'Smartwatch de diseño minimalista',
+    prod: 'Smartwatch Nebula X', price: '$219.990', oldPrice: null,
+  },
+];
+---
+<Layout title="NovaTech — Tienda de Tecnología | Inicio">
+  <Header />
+
+  <!-- HERO SLIDER (fondos webp full-width) -->
+  <section class="hero" id="hero">
+    <div class="slides">
+      {heroSlides.map((s, i) => (
+        <div class={`slide ${i === 0 ? 'active' : ''}`} data-slide={i}>
+          <img class="slide-bg" src={s.bg} alt="" loading={i === 0 ? 'eager' : 'lazy'} />
+          <div class="container slide-inner">
+            <div class="hero-text">
+              <span class="hero-tag"><Icon name={s.icon} size={14} /> {s.tag}</span>
+              <h1>{s.title} <em>{s.em}</em></h1>
+              <p>{s.desc}</p>
+              <div class="hero-actions">
+                <a href={`/productos/?cat=${encodeURIComponent(s.cat)}`} class="btn btn-primary">Ver {s.cat}</a>
+                <a href="/productos/" class="btn btn-ghost">Todo el catálogo</a>
+              </div>
+            </div>
+            <div class="hero-img">
+              <img src={s.img} alt={s.alt} loading={i === 0 ? 'eager' : 'lazy'} onerror={`this.onerror=null;this.src='${PLACEHOLDER}'`} />
+              <div class="hero-card">
+                <strong>{s.prod}</strong>
+                <span>{s.price} {s.oldPrice && <s>{s.oldPrice}</s>}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+
+      <div class="hero-nav">
+        <button class="hero-arrow" id="hero-prev" aria-label="Anterior"><Icon name="chevron-left" size={18} /></button>
+        <div class="hero-dots" role="tablist" aria-label="Diapositivas">
+          {heroSlides.map((s, i) => (
+            <button class={`dot ${i === 0 ? 'active' : ''}`} data-dot={i} aria-label={`Ir a ${s.cat}`}></button>
+          ))}
+        </div>
+        <button class="hero-arrow" id="hero-next" aria-label="Siguiente"><Icon name="chevron-right" size={18} /></button>
+      </div>
+    </div>
+
+    <div class="container hero-trust">
+      <span><Icon name="star" size={15} /> 4.8/5 en valoraciones</span>
+      <span><Icon name="truck" size={15} /> Envío 24h</span>
+      <span><Icon name="shield" size={15} /> Garantía 2 años</span>
+    </div>
+  </section>
+
+  <!-- CATEGORÍAS -->
+  <section class="section container">
+    <div class="section-head">
+      <div>
+        <h2 class="section-title">Compra por categoría</h2>
+        <p class="section-sub">Encuentra rápidamente lo que buscas</p>
+      </div>
+      <a href="/categorias/" class="see-all">Ver todas →</a>
+    </div>
+    <div class="cat-grid">
+      {categoryInfo.slice(0, 6).map((c) => (
+        <a href={`/productos/?cat=${encodeURIComponent(c.nombre)}`} class="cat-card">
+          <img src={c.imagen} alt={c.nombre} loading="lazy" onerror={`this.onerror=null;this.src='${PLACEHOLDER}'`} />
+          <div class="cat-overlay">
+            <strong>{c.nombre}</strong>
+            <span>{c.count} productos</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- DESTACADOS -->
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">Productos destacados</h2>
+          <p class="section-sub">Los favoritos de nuestros clientes</p>
+        </div>
+        <a href="/productos/" class="see-all">Ver todos →</a>
+      </div>
+      <div class="grid">
+        {destacados.map((product) => <ProductCard product={product} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- BENEFICIOS -->
+  <section class="section container">
+    <div class="benefits">
+      <div class="benefit">
+        <span class="benefit-icon"><Icon name="truck" size={24} /></span>
+        <h3>Envío gratis 24h</h3>
+        <p>En pedidos superiores a 50 €. Recíbelo mañana en tu casa.</p>
+      </div>
+      <div class="benefit">
+        <span class="benefit-icon"><Icon name="shield" size={24} /></span>
+        <h3>Garantía 2 años</h3>
+        <p>Todos los productos con garantía extendida incluida.</p>
+      </div>
+      <div class="benefit">
+        <span class="benefit-icon"><Icon name="rotate-ccw" size={24} /></span>
+        <h3>Devolución gratuita</h3>
+        <p>30 días para cambiar de opinión, sin preguntas.</p>
+      </div>
+      <div class="benefit">
+        <span class="benefit-icon"><Icon name="message-circle" size={24} /></span>
+        <h3>Soporte experto</h3>
+        <p>Nuestro equipo te asesora antes y después de comprar.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA NEWSLETTER -->
+  <section class="container">
+    <div class="cta">
+      <div>
+        <h2>Recibe ofertas exclusivas</h2>
+        <p>Suscríbete y obtén un 10% de descuento en tu primera compra.</p>
+      </div>
+      <form class="cta-form" id="newsletter-form">
+        <input type="email" placeholder="Tu email" required aria-label="Tu email" />
+        <button type="submit" class="btn btn-light">Suscribirme</button>
+      </form>
+    </div>
+  </section>
+
+  <Footer />
+  <CartDrawer />
+</Layout>
+
+<style>
+  /* HERO SLIDER con fondos webp */
+  .hero { background: #fff; border-bottom: 1px solid var(--border); padding-bottom: 26px; }
+  .slides { display: grid; position: relative; }
+  .slide {
+    grid-area: 1 / 1;
+    position: relative; overflow: hidden;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.6s ease;
+  }
+  .slide.active { opacity: 1; pointer-events: auto; }
+
+  .slide-bg {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; z-index: 0;
+  }
+  /* Overlay mínimo — solo para uniformar levemente el fondo */
+  .slide::after {
+    content: ''; position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(90deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 60%);
+  }
+
+  .slide-inner {
+    position: relative; z-index: 2;
+    max-width: 1400px; margin: 0 auto;
+    display: grid; grid-template-columns: 1.1fr 1fr; gap: 50px; align-items: center;
+    padding-top: 56px; padding-bottom: 72px;
+  }
+  .hero-text { color: var(--text); }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 7px; padding: 7px 16px; border-radius: 999px;
+    background: rgba(255,255,255,0.72); border: 1px solid rgba(16,24,40,0.14);
+    backdrop-filter: blur(8px); color: var(--text);
+    font-size: 0.82rem; font-weight: 600; margin-bottom: 20px;
+  }
+  h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 800; line-height: 1.08; letter-spacing: -0.03em; margin-bottom: 18px; color: var(--text); }
+  h1 em { font-style: normal; color: var(--accent); }
+  .hero-text p { color: var(--text-dim); font-size: 1.05rem; line-height: 1.65; margin-bottom: 28px; max-width: 480px; }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-ghost {
+    background: rgba(255,255,255,0.72); color: var(--text);
+    border: 1.5px solid rgba(16,24,40,0.18); backdrop-filter: blur(6px);
+  }
+  .btn-ghost:hover { background: rgba(255,255,255,0.92); transform: translateY(-2px); }
+
+  .hero-img { position: relative; width: 100%; max-width: 520px; justify-self: end; }
+  .hero-img img {
+    width: 100%; aspect-ratio: 5/4; object-fit: cover;
+    border-radius: 24px; box-shadow: var(--shadow-lg);
+  }
+  .hero-card {
+    position: absolute; bottom: 18px; left: 18px;
+    display: flex; flex-direction: column; gap: 2px;
+    padding: 13px 18px; border-radius: 14px;
+    background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(8px);
+    box-shadow: var(--shadow-md); font-size: 0.9rem;
+  }
+  .hero-card span { color: var(--accent); font-weight: 800; }
+  .hero-card s { color: var(--text-dim); font-weight: 400; margin-left: 6px; }
+
+  .hero-nav {
+    position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%); z-index: 3;
+    display: flex; align-items: center; gap: 18px;
+  }
+  .hero-arrow {
+    display: grid; place-items: center; width: 38px; height: 38px;
+    border-radius: 999px; border: 1.5px solid rgba(16,24,40,0.18);
+    background: rgba(255,255,255,0.75); backdrop-filter: blur(6px);
+    color: var(--text); transition: all 0.15s;
+  }
+  .hero-arrow:hover { background: #fff; transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+  .hero-dots { display: flex; gap: 8px; }
+  .dot {
+    width: 9px; height: 9px; border-radius: 999px; border: none;
+    background: rgba(16,24,40,0.25); transition: all 0.25s; padding: 0;
+  }
+  .dot.active { width: 26px; background: var(--accent); }
+
+  .hero-trust { display: flex; gap: 22px; flex-wrap: wrap; justify-content: center; margin-top: 22px; font-size: 0.85rem; color: var(--text-dim); font-weight: 600; }
+  .hero-trust span { display: inline-flex; align-items: center; gap: 7px; }
+  .hero-trust :global(svg) { color: var(--accent); }
+
+  /* SECCIONES */
+  .section { padding-top: 64px; padding-bottom: 10px; }
+  .section-soft { background: var(--bg-soft); margin-top: 54px; padding-bottom: 64px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .section-head { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 28px; }
+  .see-all { color: var(--accent); font-weight: 700; text-decoration: none; font-size: 0.92rem; white-space: nowrap; }
+  .see-all:hover { text-decoration: underline; }
+
+  .cat-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; }
+  .cat-card {
+    position: relative; border-radius: var(--radius); overflow: hidden;
+    aspect-ratio: 3/4; display: block; box-shadow: var(--shadow-sm);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .cat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  .cat-card img { width: 100%; height: 100%; object-fit: cover; }
+  .cat-overlay {
+    position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: end;
+    padding: 16px; color: #fff; text-decoration: none;
+    background: linear-gradient(180deg, transparent 40%, rgba(10, 15, 30, 0.85));
+  }
+  .cat-overlay strong { font-size: 1.02rem; }
+  .cat-overlay span { font-size: 0.8rem; opacity: 0.85; }
+
+  .grid { display: grid; gap: 22px; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+
+  .benefits { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; }
+  .benefit {
+    padding: 26px; border-radius: var(--radius);
+    background: #fff; border: 1px solid var(--border); box-shadow: var(--shadow-sm);
+  }
+  .benefit-icon {
+    display: inline-grid; place-items: center; width: 50px; height: 50px;
+    border-radius: 14px; background: var(--accent-soft); color: var(--accent);
+  }
+  .benefit h3 { font-size: 1.02rem; font-weight: 800; margin: 12px 0 6px; }
+  .benefit p { color: var(--text-dim); font-size: 0.88rem; line-height: 1.55; }
+
+  .cta {
+    margin-top: 64px; padding: 44px 48px; border-radius: 24px;
+    background: linear-gradient(135deg, var(--accent), #7c3aed);
+    color: #fff; display: flex; align-items: center; justify-content: space-between;
+    gap: 30px; flex-wrap: wrap; box-shadow: 0 20px 45px rgba(79, 70, 229, 0.35);
+  }
+  .cta h2 { font-size: 1.6rem; font-weight: 800; }
+  .cta p { opacity: 0.9; margin-top: 6px; }
+  .cta-form { display: flex; gap: 10px; flex-wrap: wrap; }
+  .cta-form input {
+    padding: 13px 18px; border-radius: 12px; border: none;
+    font-size: 0.95rem; min-width: 240px; outline: none;
+  }
+  .btn-light { background: #fff; color: var(--accent); }
+  .btn-light:hover { transform: translateY(-2px); }
+
+  @media (max-width: 860px) {
+    .slide-inner { grid-template-columns: 1fr; gap: 28px; padding-top: 40px; padding-bottom: 64px; }
+    .slide::after { background: rgba(255,255,255,0.06); }
+    .cat-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 500px) {
+    .cat-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+
+<script>
+  // ---------- Hero slider ----------
+  const slides = [...document.querySelectorAll('.slide')];
+  const dots = [...document.querySelectorAll('.dot')];
+  let current = 0;
+  let timer;
+
+  function goTo(i) {
+    current = (i + slides.length) % slides.length;
+    slides.forEach((s, idx) => s.classList.toggle('active', idx === current));
+    dots.forEach((d, idx) => d.classList.toggle('active', idx === current));
+  }
+  function autoplay() {
+    clearInterval(timer);
+    timer = setInterval(() => goTo(current + 1), 5500);
+  }
+
+  document.getElementById('hero-prev').addEventListener('click', () => { goTo(current - 1); autoplay(); });
+  document.getElementById('hero-next').addEventListener('click', () => { goTo(current + 1); autoplay(); });
+  dots.forEach((d) => d.addEventListener('click', () => { goTo(Number(d.dataset.dot)); autoplay(); }));
+
+  const hero = document.getElementById('hero');
+  hero.addEventListener('mouseenter', () => clearInterval(timer));
+  hero.addEventListener('mouseleave', autoplay);
+  autoplay();
+
+  // ---------- Newsletter ----------
+  document.getElementById('newsletter-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const toast = document.getElementById('toast');
+    toast.textContent = '¡Suscrito! Revisa tu email (demo) ✓';
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2500);
+    e.target.reset();
+  });
+</script>

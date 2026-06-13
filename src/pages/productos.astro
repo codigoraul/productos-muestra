@@ -1,0 +1,135 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import PageHeader from '../components/PageHeader.astro';
+import ProductCard from '../components/ProductCard.astro';
+import CartDrawer from '../components/CartDrawer.astro';
+import Footer from '../components/Footer.astro';
+import { products, categories } from '../data/products.js';
+---
+<Layout title="Productos — NovaTech">
+  <Header />
+  <PageHeader
+    title="Nuestros productos"
+    subtitle={`${products.length} productos · la mejor tecnología al mejor precio`}
+    crumbs={[{ label: 'Productos' }]}
+  />
+
+  <main class="container main">
+    <div class="toolbar">
+      <div class="chips" role="tablist" aria-label="Filtrar por categoría">
+        {categories.map((cat, i) => (
+          <button class={`chip ${i === 0 ? 'active' : ''}`} data-cat={cat}>{cat}</button>
+        ))}
+      </div>
+      <select id="sort-select" class="sort" aria-label="Ordenar productos">
+        <option value="default">Relevancia</option>
+        <option value="precio-asc">Precio: menor a mayor</option>
+        <option value="precio-desc">Precio: mayor a menor</option>
+        <option value="rating">Mejor valorados</option>
+      </select>
+    </div>
+
+    <p id="results-count" class="results-count"></p>
+
+    <div id="grid" class="grid">
+      {products.map((product) => <ProductCard product={product} />)}
+    </div>
+
+    <div id="no-results" class="no-results" hidden>
+      <span>🔍</span>
+      <h3>Sin resultados</h3>
+      <p>No encontramos productos que coincidan con tu búsqueda.</p>
+    </div>
+  </main>
+
+  <Footer />
+  <CartDrawer />
+</Layout>
+
+<style>
+  .main { padding-top: 34px; }
+  .toolbar {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap; margin-bottom: 14px;
+  }
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; }
+  .chip {
+    padding: 9px 18px; border-radius: 999px;
+    background: #fff; border: 1.5px solid var(--border);
+    color: var(--text-dim); font-size: 0.87rem; font-weight: 600;
+    transition: all 0.18s;
+  }
+  .chip:hover { border-color: var(--accent); color: var(--accent); }
+  .chip.active { background: var(--accent); border-color: var(--accent); color: #fff; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3); }
+  .sort {
+    padding: 10px 14px; border-radius: 11px; border: 1.5px solid var(--border);
+    background: #fff; color: var(--text); font-size: 0.88rem; font-weight: 600;
+    outline: none; cursor: pointer;
+  }
+  .results-count { color: var(--text-dim); font-size: 0.85rem; margin-bottom: 20px; }
+  .grid { display: grid; gap: 22px; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+  .no-results { text-align: center; padding: 80px 0; color: var(--text-dim); }
+  .no-results span { font-size: 3rem; }
+  .no-results h3 { color: var(--text); margin: 12px 0 6px; }
+</style>
+
+<script>
+  // Buscador en vivo + filtros por categoría + ordenación.
+  // Soporta llegar con /productos/?q=texto o /productos/?cat=Audio
+  const grid = document.getElementById('grid');
+  const cards = [...grid.querySelectorAll('.card')];
+  const searchInput = document.getElementById('search-input');
+  const sortSelect = document.getElementById('sort-select');
+  const chips = [...document.querySelectorAll('.chip')];
+  const noResults = document.getElementById('no-results');
+  const resultsCount = document.getElementById('results-count');
+
+  let activeCat = 'Todos';
+
+  function applyFilters() {
+    const q = searchInput.value.trim().toLowerCase();
+    let visible = 0;
+
+    cards.forEach((card) => {
+      const matchCat = activeCat === 'Todos' || card.dataset.categoria === activeCat;
+      const matchQ = !q || card.dataset.nombre.toLowerCase().includes(q) || card.dataset.categoria.toLowerCase().includes(q);
+      const show = matchCat && matchQ;
+      card.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+
+    noResults.hidden = visible > 0;
+    resultsCount.textContent = `Mostrando ${visible} de ${cards.length} productos`;
+
+    const sort = sortSelect.value;
+    if (sort !== 'default') {
+      const sorted = [...cards].sort((a, b) => {
+        if (sort === 'precio-asc') return a.dataset.precio - b.dataset.precio;
+        if (sort === 'precio-desc') return b.dataset.precio - a.dataset.precio;
+        if (sort === 'rating') return b.dataset.rating - a.dataset.rating;
+        return 0;
+      });
+      sorted.forEach((c) => grid.appendChild(c));
+    }
+  }
+
+  function setCategory(cat) {
+    activeCat = cat;
+    chips.forEach((c) => c.classList.toggle('active', c.dataset.cat === cat));
+    applyFilters();
+  }
+
+  searchInput.addEventListener('input', applyFilters);
+  sortSelect.addEventListener('change', applyFilters);
+  chips.forEach((chip) => chip.addEventListener('click', () => setCategory(chip.dataset.cat)));
+
+  // Parámetros de URL
+  const params = new URLSearchParams(location.search);
+  if (params.get('q')) searchInput.value = params.get('q');
+  if (params.get('cat') && chips.some((c) => c.dataset.cat === params.get('cat'))) {
+    setCategory(params.get('cat'));
+  } else {
+    applyFilters();
+  }
+</script>

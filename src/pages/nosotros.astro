@@ -1,0 +1,108 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import PageHeader from '../components/PageHeader.astro';
+import CartDrawer from '../components/CartDrawer.astro';
+import Footer from '../components/Footer.astro';
+import Icon from '../components/Icon.astro';
+import { PLACEHOLDER } from '../data/products.js';
+
+const teamImg = 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1100&q=80';
+---
+<Layout title="Nosotros — NovaTech">
+  <Header />
+  <PageHeader
+    title="Sobre nosotros"
+    subtitle="10 años conectando personas con la mejor tecnología."
+    crumbs={[{ label: 'Nosotros' }]}
+  />
+
+  <main class="container main">
+    <section class="story">
+      <div class="story-text">
+        <span class="eyebrow">Nuestra historia</span>
+        <h2>Tecnología seleccionada por personas que la aman</h2>
+        <p>NovaTech nació en 2016 con una idea sencilla: que comprar tecnología fuera fácil, transparente y de confianza. Empezamos como una pequeña tienda en Madrid y hoy enviamos a toda España.</p>
+        <p>Cada producto de nuestro catálogo pasa por un proceso de selección riguroso: lo probamos, lo comparamos y solo vendemos lo que nosotros mismos compraríamos.</p>
+        <div class="stats">
+          <div><strong>+12K</strong><span>Clientes felices</span></div>
+          <div><strong>10</strong><span>Años de experiencia</span></div>
+          <div><strong>4.8★</strong><span>Valoración media</span></div>
+          <div><strong>24h</strong><span>Envío express</span></div>
+        </div>
+      </div>
+      <div class="story-img">
+        <img src={teamImg} alt="Equipo de NovaTech trabajando" onerror={`this.onerror=null;this.src='${PLACEHOLDER}'`} />
+      </div>
+    </section>
+
+    <section class="values">
+      <h2 class="section-title">Lo que nos mueve</h2>
+      <div class="values-grid">
+        <div class="value-card">
+          <span class="value-icon"><Icon name="target" size={22} /></span>
+          <h3>Honestidad</h3>
+          <p>Precios claros, sin letra pequeña. Si un producto no merece la pena, no lo vendemos.</p>
+        </div>
+        <div class="value-card">
+          <span class="value-icon"><Icon name="users" size={22} /></span>
+          <h3>Cercanía</h3>
+          <p>Te atendemos personas reales que conocen cada producto y te asesoran sin compromiso.</p>
+        </div>
+        <div class="value-card">
+          <span class="value-icon"><Icon name="leaf" size={22} /></span>
+          <h3>Sostenibilidad</h3>
+          <p>Embalajes reciclables, programa de recompra y reacondicionado de dispositivos.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-cta">
+      <h2>¿Quieres saber más?</h2>
+      <p>Escríbenos y te responderemos en menos de 24 horas.</p>
+      <a href="/contacto/" class="btn btn-primary">Contactar</a>
+    </section>
+  </main>
+
+  <Footer />
+  <CartDrawer />
+</Layout>
+
+<style>
+  .main { padding-top: 50px; }
+  .eyebrow { color: var(--accent); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.07em; }
+
+  .story { display: grid; grid-template-columns: 1.1fr 1fr; gap: 50px; align-items: center; }
+  .story-text h2 { font-size: clamp(1.5rem, 3vw, 2.1rem); font-weight: 800; letter-spacing: -0.02em; margin: 10px 0 16px; }
+  .story-text p { color: var(--text-dim); line-height: 1.7; margin-bottom: 14px; }
+  .stats { display: grid; grid-template-columns: repeat(4, auto); gap: 26px; margin-top: 26px; }
+  .stats div { display: flex; flex-direction: column; }
+  .stats strong { font-size: 1.5rem; font-weight: 800; color: var(--accent); }
+  .stats span { color: var(--text-dim); font-size: 0.82rem; }
+  .story-img img { border-radius: 22px; box-shadow: var(--shadow-lg); aspect-ratio: 4/3; object-fit: cover; width: 100%; }
+
+  .values { margin-top: 80px; }
+  .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 26px; }
+  .value-card {
+    padding: 30px; border-radius: var(--radius);
+    background: #fff; border: 1px solid var(--border); box-shadow: var(--shadow-sm);
+  }
+  .value-icon {
+    display: inline-grid; place-items: center; width: 50px; height: 50px;
+    border-radius: 14px; background: var(--accent-soft); color: var(--accent);
+  }
+  .value-card h3 { font-size: 1.1rem; font-weight: 800; margin: 14px 0 8px; }
+  .value-card p { color: var(--text-dim); font-size: 0.92rem; line-height: 1.6; }
+
+  .about-cta {
+    margin-top: 80px; text-align: center; padding: 50px 30px;
+    background: var(--accent-soft); border-radius: 24px;
+  }
+  .about-cta h2 { font-size: 1.6rem; font-weight: 800; }
+  .about-cta p { color: var(--text-dim); margin: 8px 0 22px; }
+
+  @media (max-width: 860px) {
+    .story { grid-template-columns: 1fr; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>

@@ -1,0 +1,59 @@
+---
+---
+<section class="hero container">
+  <div class="hero-badge glass">✨ Nueva colección 2026</div>
+  <h1>Tecnología que se siente <span class="grad-text">del futuro</span></h1>
+  <p>Descubre gadgets premium con envío gratis, garantía extendida y devoluciones sin preguntas durante 30 días.</p>
+  <div class="hero-actions">
+    <a href="#productos" class="btn-primary">Explorar productos</a>
+    <a href="#productos" class="btn-ghost glass">Ver ofertas 🔥</a>
+  </div>
+  <div class="hero-stats">
+    <div><strong>+12K</strong><span>Clientes felices</span></div>
+    <div><strong>4.8★</strong><span>Valoración media</span></div>
+    <div><strong>24h</strong><span>Envío express</span></div>
+  </div>
+</section>
+
+<style>
+  .hero { text-align: center; padding-top: 90px; padding-bottom: 70px; }
+  .hero-badge {
+    display: inline-block; padding: 8px 18px; border-radius: 999px;
+    font-size: 0.85rem; color: var(--text-dim); margin-bottom: 26px;
+  }
+  h1 {
+    font-size: clamp(2.4rem, 6vw, 4.2rem);
+    font-weight: 700; line-height: 1.08; letter-spacing: -0.02em;
+    max-width: 800px; margin: 0 auto 20px;
+  }
+  p {
+    color: var(--text-dim); font-size: 1.1rem; line-height: 1.6;
+    max-width: 560px; margin: 0 auto 34px;
+  }
+  .hero-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    padding: 14px 32px; border-radius: 999px; text-decoration: none;
+    background: var(--grad-cta); background-size: 200% 200%;
+    color: #fff; font-weight: 600; font-size: 1rem;
+    box-shadow: 0 10px 30px rgba(236, 72, 153, 0.4);
+    transition: transform 0.15s, box-shadow 0.2s;
+    animation: shimmer 5s ease infinite;
+  }
+  @keyframes shimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(236, 72, 153, 0.55); }
+  .btn-ghost {
+    padding: 14px 32px; border-radius: 999px; text-decoration: none;
+    color: var(--text); font-weight: 600; font-size: 1rem;
+    transition: transform 0.15s, background 0.2s;
+  }
+  .btn-ghost:hover { transform: translateY(-3px); background: var(--surface-2); }
+  .hero-stats {
+    display: flex; gap: 56px; justify-content: center; margin-top: 60px; flex-wrap: wrap;
+  }
+  .hero-stats div { display: flex; flex-direction: column; gap: 4px; }
+  .hero-stats strong { font-size: 1.6rem; }
+  .hero-stats span { color: var(--text-dim); font-size: 0.88rem; }
+</style>

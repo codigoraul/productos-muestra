@@ -1,0 +1,83 @@
+---
+const { title = 'NovaTech — Tienda de Tecnología', description = 'Tienda de tecnología con los mejores gadgets: audio, gaming, wearables y más. Envío gratis 24h.' } = Astro.props;
+---
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --bg: #ffffff;
+    --bg-soft: #f7f8fb;
+    --surface: #ffffff;
+    --border: #e6e8ef;
+    --text: #101828;
+    --text-dim: #5d6678;
+    --accent: #4f46e5;
+    --accent-dark: #4338ca;
+    --accent-soft: #eef2ff;
+    --green: #059669;
+    --amber: #f59e0b;
+    --radius: 16px;
+    --shadow-sm: 0 1px 3px rgba(16, 24, 40, 0.07);
+    --shadow-md: 0 8px 24px rgba(16, 24, 40, 0.09);
+    --shadow-lg: 0 20px 45px rgba(16, 24, 40, 0.13);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+
+  img { max-width: 100%; display: block; }
+  button { font-family: inherit; cursor: pointer; }
+  input, select, textarea { font-family: inherit; }
+  a { color: inherit; }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 13px 28px; border-radius: 12px; border: none;
+    font-size: 0.95rem; font-weight: 700; text-decoration: none;
+    transition: all 0.18s ease;
+  }
+  .btn-primary {
+    background: var(--accent); color: #fff;
+    box-shadow: 0 6px 16px rgba(79, 70, 229, 0.3);
+  }
+  .btn-primary:hover { background: var(--accent-dark); transform: translateY(-2px); box-shadow: 0 10px 24px rgba(79, 70, 229, 0.35); }
+  .btn-outline {
+    background: #fff; color: var(--text);
+    border: 1.5px solid var(--border); box-shadow: var(--shadow-sm);
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+  .section-title { font-size: clamp(1.5rem, 3vw, 2.1rem); font-weight: 800; letter-spacing: -0.02em; }
+  .section-sub { color: var(--text-dim); margin-top: 8px; }
+
+  ::selection { background: var(--accent); color: #fff; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>

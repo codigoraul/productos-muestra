@@ -1,0 +1,83 @@
+---
+import { PLACEHOLDER } from '../data/products.js';
+const { product } = Astro.props;
+const { id, nombre, categoria, precio, precioAnterior, rating, reviews, imagen, badge } = product;
+const stars = '★'.repeat(Math.round(rating)) + '☆'.repeat(5 - Math.round(rating));
+const fmt = (n) => n.toLocaleString('es-CL', { style: 'currency', currency: 'CLP', maximumFractionDigits: 0 });
+---
+<article
+  class="card"
+  data-id={id}
+  data-nombre={nombre}
+  data-categoria={categoria}
+  data-precio={precio}
+  data-rating={rating}
+  data-img={imagen}
+>
+  <a href={`/producto/${id}/`} class="card-img" aria-label={`Ver ${nombre}`}>
+    <img src={imagen} alt={nombre} loading="lazy" onerror={`this.onerror=null;this.src='${PLACEHOLDER}'`} />
+    {badge && <span class={`card-badge ${badge.startsWith('-') ? 'sale' : ''}`}>{badge}</span>}
+  </a>
+  <div class="card-body">
+    <span class="card-cat">{categoria}</span>
+    <h3><a href={`/producto/${id}/`}>{nombre}</a></h3>
+    <div class="card-rating">
+      <span class="stars">{stars}</span>
+      <span class="reviews">({reviews.toLocaleString('es')})</span>
+    </div>
+    <div class="card-footer">
+      <div class="prices">
+        <span class="price">{fmt(precio)}</span>
+        {precioAnterior && <span class="price-old">{fmt(precioAnterior)}</span>}
+      </div>
+      <button class="add-btn" data-add={id} aria-label={`Añadir ${nombre} al carrito`}>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+        Añadir
+      </button>
+    </div>
+  </div>
+</article>
+
+<style>
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex; flex-direction: column;
+  }
+  .card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+
+  .card-img { position: relative; display: block; aspect-ratio: 4/3; overflow: hidden; background: var(--bg-soft); }
+  .card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.35s ease; }
+  .card:hover .card-img img { transform: scale(1.06); }
+  .card-badge {
+    position: absolute; top: 12px; left: 12px;
+    padding: 5px 11px; border-radius: 999px;
+    background: var(--text); color: #fff;
+    font-size: 0.72rem; font-weight: 700;
+  }
+  .card-badge.sale { background: #dc2626; }
+
+  .card-body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+  .card-cat { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--accent); }
+  h3 { font-size: 1rem; font-weight: 700; line-height: 1.35; }
+  h3 a { text-decoration: none; color: var(--text); }
+  h3 a:hover { color: var(--accent); }
+  .card-rating { display: flex; align-items: center; gap: 6px; font-size: 0.8rem; }
+  .stars { color: var(--amber); letter-spacing: 1px; }
+  .reviews { color: var(--text-dim); }
+
+  .card-footer { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto; padding-top: 10px; }
+  .prices { display: flex; flex-direction: column; }
+  .price { font-size: 1.15rem; font-weight: 800; }
+  .price-old { font-size: 0.8rem; color: var(--text-dim); text-decoration: line-through; }
+  .add-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 9px 16px; border: none; border-radius: 10px;
+    background: var(--accent-soft); color: var(--accent);
+    font-size: 0.85rem; font-weight: 700;
+    transition: all 0.15s;
+  }
+  .add-btn:hover { background: var(--accent); color: #fff; }
+</style>

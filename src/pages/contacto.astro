@@ -1,0 +1,236 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import PageHeader from '../components/PageHeader.astro';
+import CartDrawer from '../components/CartDrawer.astro';
+import Footer from '../components/Footer.astro';
+import Icon from '../components/Icon.astro';
+---
+<Layout title="Contacto — NovaTech">
+  <Header />
+  <PageHeader
+    title="Contacto"
+    subtitle="Respondemos en menos de 24 horas."
+    crumbs={[{ label: 'Contacto' }]}
+  />
+
+  <main class="contact-main">
+
+    <!-- FORMULARIO + INFO -->
+    <div class="container form-wrap">
+      <div class="form-left">
+        <p class="form-eyebrow">/ Escríbenos</p>
+        <h2>¿En qué podemos<br/>ayudarte?</h2>
+        <p class="form-sub">Cuéntanos tu consulta y te respondemos en menos de un día laborable.</p>
+
+        <form id="contact-form" class="form">
+          <div class="form-row">
+            <label>
+              <span>Nombre</span>
+              <input type="text" name="nombre" placeholder="Tu nombre" required />
+            </label>
+            <label>
+              <span>Email</span>
+              <input type="email" name="email" placeholder="tu@email.com" required />
+            </label>
+          </div>
+          <label>
+            <span>Asunto</span>
+            <select name="asunto">
+              <option>Consulta sobre un producto</option>
+              <option>Estado de mi pedido</option>
+              <option>Devoluciones y garantía</option>
+              <option>Otro</option>
+            </select>
+          </label>
+          <label>
+            <span>Mensaje</span>
+            <textarea name="mensaje" rows="5" placeholder="Cuéntanos en qué podemos ayudarte…" required></textarea>
+          </label>
+          <div class="form-footer">
+            <button type="submit" class="send-btn">
+              Enviar mensaje
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </button>
+            <p class="form-ok" id="form-ok" hidden>
+              <Icon name="check-circle" size={15} /> ¡Enviado! Te responderemos pronto.
+            </p>
+          </div>
+        </form>
+      </div>
+
+      <!-- RECUADRO NEGRO DE CONTACTO -->
+      <div class="form-right">
+        <div class="info-black">
+          <p class="ib-eyebrow">/ Encuéntranos</p>
+          <h3>Estamos aquí<br/>para ayudarte.</h3>
+
+          <div class="ib-items">
+            <div class="ib-item">
+              <span class="ib-icon"><Icon name="map-pin" size={16} /></span>
+              <div>
+                <span class="ib-label">Dirección</span>
+                <span class="ib-val">Calle Mayor 123<br/>28013 Madrid, España</span>
+              </div>
+            </div>
+            <div class="ib-item">
+              <span class="ib-icon"><Icon name="phone" size={16} /></span>
+              <div>
+                <span class="ib-label">Teléfono</span>
+                <span class="ib-val">900 123 456</span>
+              </div>
+            </div>
+            <div class="ib-item">
+              <span class="ib-icon"><Icon name="mail" size={16} /></span>
+              <div>
+                <span class="ib-label">Email</span>
+                <span class="ib-val">hola@novatech.demo</span>
+              </div>
+            </div>
+            <div class="ib-item">
+              <span class="ib-icon"><Icon name="clock" size={16} /></span>
+              <div>
+                <span class="ib-label">Horario</span>
+                <span class="ib-val">Lun–Sáb · 9:00 a 20:00</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="ib-social">
+            <span>Síguenos</span>
+            <a href="#" aria-label="Instagram"><Icon name="instagram" size={17} /></a>
+            <a href="#" aria-label="X"><Icon name="x" size={17} /></a>
+            <a href="#" aria-label="YouTube"><Icon name="youtube" size={17} /></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAPA AL FINAL -->
+    <div class="map-full">
+      <iframe
+        title="Mapa de la tienda"
+        src="https://www.openstreetmap.org/export/embed.html?bbox=-3.7128%2C40.4145%2C-3.6998%2C40.4205&layer=mapnik&marker=40.4175%2C-3.7063"
+        loading="lazy"
+      ></iframe>
+    </div>
+
+  </main>
+
+  <Footer />
+  <CartDrawer />
+</Layout>
+
+<style>
+  /* FORM WRAP */
+  .contact-main { background: #fff; }
+  .form-wrap {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0; align-items: center;
+    padding-top: 72px; padding-bottom: 80px;
+  }
+
+  /* LEFT */
+  .form-left { padding-right: 64px; border-right: 1px solid var(--border); }
+  .form-eyebrow {
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--text-dim); margin-bottom: 16px;
+  }
+  .form-left h2 {
+    font-size: clamp(1.3rem, 2vw, 1.7rem); font-weight: 800;
+    letter-spacing: -0.02em; line-height: 1.15; color: #0a0a0a;
+    margin-bottom: 16px;
+  }
+  .form-sub { color: var(--text-dim); font-size: 0.95rem; line-height: 1.65; margin-bottom: 32px; }
+
+  .form { display: flex; flex-direction: column; gap: 18px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  label { display: flex; flex-direction: column; gap: 7px; }
+  label span { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #0a0a0a; }
+  input, select, textarea {
+    padding: 14px 16px;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 10px; font-size: 0.93rem;
+    color: var(--text); background: #fafafa;
+    outline: none; transition: all 0.2s; resize: vertical;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: #0a0a0a; background: #fff;
+    box-shadow: 0 0 0 3px rgba(10,10,10,0.08);
+  }
+  .form-footer { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-top: 4px; }
+  .send-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 15px 32px; border: none; border-radius: 10px;
+    background: #0a0a0a; color: #fff;
+    font-size: 0.95rem; font-weight: 700; cursor: pointer;
+    transition: all 0.18s;
+  }
+  .send-btn:hover { background: #222; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+  .form-ok { color: var(--green); font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; gap: 7px; }
+  .form-ok :global(svg) { color: var(--green); }
+
+  /* RIGHT — recuadro negro */
+  .form-right { padding-left: 64px; }
+  .info-black {
+    background: #0a0a0a; border-radius: 6px;
+    padding: 44px 44px 36px; color: #fff;
+    display: flex; flex-direction: column;
+    height: 100%; min-height: 480px;
+  }
+  .ib-eyebrow {
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.16em;
+    text-transform: uppercase; color: rgba(255,255,255,0.3);
+    margin-bottom: 14px;
+  }
+  .info-black h3 {
+    font-size: 1.65rem; font-weight: 800; letter-spacing: -0.025em;
+    line-height: 1.15; color: #fff; margin-bottom: 40px;
+  }
+  .ib-items {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 28px 24px; flex: 1;
+  }
+  .ib-item { display: flex; align-items: flex-start; gap: 12px; }
+  .ib-icon {
+    width: 34px; height: 34px; border-radius: 7px; flex-shrink: 0;
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1);
+    display: grid; place-items: center;
+    color: rgba(255,255,255,0.45);
+  }
+  .ib-label {
+    display: block; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 5px;
+  }
+  .ib-val { display: block; font-size: 0.92rem; color: rgba(255,255,255,0.82); line-height: 1.55; }
+  .ib-social {
+    display: flex; align-items: center; gap: 14px;
+    padding-top: 28px; margin-top: 36px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: rgba(255,255,255,0.3);
+  }
+  .ib-social a { color: rgba(255,255,255,0.5); transition: color 0.15s; }
+  .ib-social a:hover { color: #fff; }
+
+  /* MAPA FINAL */
+  .map-full { margin-top: 0; }
+  .map-full iframe { width: 100%; height: 380px; border: 0; display: block; }
+
+  @media (max-width: 900px) {
+    .data-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+    .data-item { border-right: none; padding: 0; }
+    .form-wrap { grid-template-columns: 1fr; }
+    .form-left { padding-right: 0; border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 48px; margin-bottom: 48px; }
+    .form-right { padding-left: 0; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script>
+  document.getElementById('contact-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    document.getElementById('form-ok').hidden = false;
+    (e.target as HTMLFormElement).reset();
+  });
+</script>
