@@ -17,6 +17,7 @@ const fotos = galeria ?? [imagen];
 const stars = '★'.repeat(Math.round(rating)) + '☆'.repeat(5 - Math.round(rating));
 const fmt = (n) => n.toLocaleString('es-CL', { style: 'currency', currency: 'CLP', maximumFractionDigits: 0 });
 const descuento = precioAnterior ? Math.round((1 - precio / precioAnterior) * 100) : 0;
+const base = import.meta.env.BASE_URL;
 const relacionados = products.filter((p) => p.categoria === categoria && p.id !== id).slice(0, 4);
 ---
 <Layout title={`${nombre} — NovaTech`} description={descripcion}>
@@ -24,11 +25,11 @@ const relacionados = products.filter((p) => p.categoria === categoria && p.id !=
 
   <main class="container main">
     <nav class="breadcrumb" aria-label="Ruta de navegación">
-      <a href="/">Inicio</a>
+      <a href={base}>Inicio</a>
       <span class="sep">›</span>
-      <a href="/productos/">Productos</a>
+      <a href={`${base}productos/`}>Productos</a>
       <span class="sep">›</span>
-      <a href={`/productos/?cat=${encodeURIComponent(categoria)}`}>{categoria}</a>
+      <a href={`${base}productos/?cat=${encodeURIComponent(categoria)}`}>{categoria}</a>
       <span class="sep">›</span>
       <span class="current">{nombre}</span>
     </nav>
@@ -61,7 +62,7 @@ const relacionados = products.filter((p) => p.categoria === categoria && p.id !=
       </div>
 
       <div class="detail-info">
-        <a class="detail-cat" href={`/productos/?cat=${encodeURIComponent(categoria)}`}>{categoria}</a>
+        <a class="detail-cat" href={`${base}productos/?cat=${encodeURIComponent(categoria)}`}>{categoria}</a>
         <h1>{nombre}</h1>
         <div class="detail-rating">
           <span class="stars">{stars}</span>

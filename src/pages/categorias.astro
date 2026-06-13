@@ -5,6 +5,7 @@ import PageHeader from '../components/PageHeader.astro';
 import CartDrawer from '../components/CartDrawer.astro';
 import Footer from '../components/Footer.astro';
 import { categoryInfo, PLACEHOLDER } from '../data/products.js';
+const base = import.meta.env.BASE_URL;
 ---
 <Layout title="Categorías — NovaTech">
   <Header />
@@ -17,7 +18,7 @@ import { categoryInfo, PLACEHOLDER } from '../data/products.js';
   <main class="container main">
     <div class="cat-grid">
       {categoryInfo.map((c) => (
-        <a href={`/productos/?cat=${encodeURIComponent(c.nombre)}`} class="cat-card">
+        <a href={`${base}productos/?cat=${encodeURIComponent(c.nombre)}`} class="cat-card">
           <div class="cat-img">
             <img src={c.imagen} alt={c.nombre} loading="lazy" onerror={`this.onerror=null;this.src='${PLACEHOLDER}'`} />
           </div>

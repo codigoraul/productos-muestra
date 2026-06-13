@@ -1,5 +1,6 @@
 ---
 import { PLACEHOLDER } from '../data/products.js';
+const base = import.meta.env.BASE_URL;
 const { product } = Astro.props;
 const { id, nombre, categoria, precio, precioAnterior, rating, reviews, imagen, badge } = product;
 const stars = '★'.repeat(Math.round(rating)) + '☆'.repeat(5 - Math.round(rating));
@@ -14,13 +15,13 @@ const fmt = (n) => n.toLocaleString('es-CL', { style: 'currency', currency: 'CLP
   data-rating={rating}
   data-img={imagen}
 >
-  <a href={`/producto/${id}/`} class="card-img" aria-label={`Ver ${nombre}`}>
+  <a href={`${base}producto/${id}/`} class="card-img" aria-label={`Ver ${nombre}`}>
     <img src={imagen} alt={nombre} loading="lazy" onerror={`this.onerror=null;this.src='${PLACEHOLDER}'`} />
     {badge && <span class={`card-badge ${badge.startsWith('-') ? 'sale' : ''}`}>{badge}</span>}
   </a>
   <div class="card-body">
     <span class="card-cat">{categoria}</span>
-    <h3><a href={`/producto/${id}/`}>{nombre}</a></h3>
+    <h3><a href={`${base}producto/${id}/`}>{nombre}</a></h3>
     <div class="card-rating">
       <span class="stars">{stars}</span>
       <span class="reviews">({reviews.toLocaleString('es')})</span>

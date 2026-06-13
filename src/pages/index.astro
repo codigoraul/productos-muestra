@@ -7,6 +7,7 @@ import Footer from '../components/Footer.astro';
 import Icon from '../components/Icon.astro';
 import { products, categoryInfo, PLACEHOLDER } from '../data/products.js';
 
+const base = import.meta.env.BASE_URL;
 const destacados = [...products].sort((a, b) => b.rating - a.rating).slice(0, 8);
 
 // Slides del hero — una por categoría destacada
@@ -15,7 +16,7 @@ const heroSlides = [
     cat: 'Audio', icon: 'sparkles', tag: 'Nueva colección 2026',
     title: 'Sonido que', em: 'te envuelve',
     desc: 'Auriculares y altavoces premium con cancelación de ruido y sonido Hi-Res. Siente cada nota como nunca.',
-    bg: '/hero-backgrounds/slider-1.webp',
+    bg: `${base}hero-backgrounds/slider-1.webp`,
     img: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1100&q=80',
     alt: 'Auriculares premium sobre fondo amarillo',
     prod: 'Auriculares Aurora Pro', price: '$139.990', oldPrice: '$189.990',
@@ -24,7 +25,7 @@ const heroSlides = [
     cat: 'Gaming', icon: 'zap', tag: 'Setup gamer',
     title: 'Equipa tu', em: 'setup ganador',
     desc: 'Monitores de 165 Hz, teclados mecánicos y ratones de precisión profesional. Todo lo que necesitas para ganar.',
-    bg: '/hero-backgrounds/slider-2.webp',
+    bg: `${base}hero-backgrounds/slider-2.webp`,
     img: 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=1100&q=80',
     alt: 'Escritorio gaming con monitor',
     prod: 'Monitor Curvo Galaxy 34"', price: '$619.990', oldPrice: null,
@@ -33,7 +34,7 @@ const heroSlides = [
     cat: 'Relojes', icon: 'star', tag: 'Lo más vendido',
     title: 'Tecnología que', em: 'te acompaña',
     desc: 'Smartwatches con GPS, monitoreo de salud 24/7 y hasta 14 días de batería. Tu vida, mejor medida.',
-    bg: '/hero-backgrounds/slider-3.webp',
+    bg: `${base}hero-backgrounds/slider-3.webp`,
     img: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1100&q=80',
     alt: 'Smartwatch de diseño minimalista',
     prod: 'Smartwatch Nebula X', price: '$219.990', oldPrice: null,
@@ -55,8 +56,8 @@ const heroSlides = [
               <h1>{s.title} <em>{s.em}</em></h1>
               <p>{s.desc}</p>
               <div class="hero-actions">
-                <a href={`/productos/?cat=${encodeURIComponent(s.cat)}`} class="btn btn-primary">Ver {s.cat}</a>
-                <a href="/productos/" class="btn btn-ghost">Todo el catálogo</a>
+                <a href={`${base}productos/?cat=${encodeURIComponent(s.cat)}`} class="btn btn-primary">Ver {s.cat}</a>
+                <a href={`${base}productos/`} class="btn btn-ghost">Todo el catálogo</a>
               </div>
             </div>
             <div class="hero-img">
@@ -95,11 +96,11 @@ const heroSlides = [
         <h2 class="section-title">Compra por categoría</h2>
         <p class="section-sub">Encuentra rápidamente lo que buscas</p>
       </div>
-      <a href="/categorias/" class="see-all">Ver todas →</a>
+      <a href={`${base}categorias/`} class="see-all">Ver todas →</a>
     </div>
     <div class="cat-grid">
       {categoryInfo.slice(0, 6).map((c) => (
-        <a href={`/productos/?cat=${encodeURIComponent(c.nombre)}`} class="cat-card">
+        <a href={`${base}productos/?cat=${encodeURIComponent(c.nombre)}`} class="cat-card">
           <img src={c.imagen} alt={c.nombre} loading="lazy" onerror={`this.onerror=null;this.src='${PLACEHOLDER}'`} />
           <div class="cat-overlay">
             <strong>{c.nombre}</strong>
@@ -118,7 +119,7 @@ const heroSlides = [
           <h2 class="section-title">Productos destacados</h2>
           <p class="section-sub">Los favoritos de nuestros clientes</p>
         </div>
-        <a href="/productos/" class="see-all">Ver todos →</a>
+        <a href={`${base}productos/`} class="see-all">Ver todos →</a>
       </div>
       <div class="grid">
         {destacados.map((product) => <ProductCard product={product} />)}

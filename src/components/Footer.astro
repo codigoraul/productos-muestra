@@ -1,10 +1,11 @@
 ---
 import Icon from './Icon.astro';
+const base = import.meta.env.BASE_URL;
 ---
 <footer class="footer">
   <div class="container footer-inner">
     <div class="footer-brand">
-      <a href="/" class="logo"><span class="logo-icon">N</span> Nova<em>Tech</em></a>
+      <a href={base} class="logo"><span class="logo-icon">N</span> Nova<em>Tech</em></a>
       <p>Tu tienda de tecnología de confianza. Los mejores gadgets con envío gratis en 24h y garantía extendida.</p>
       <div class="socials">
         <a href="#" aria-label="Instagram"><Icon name="instagram" size={17} /></a>
@@ -14,18 +15,18 @@ import Icon from './Icon.astro';
     </div>
     <div class="footer-col">
       <h4>Navegación</h4>
-      <a href="/">Inicio</a>
-      <a href="/nosotros/">Nosotros</a>
-      <a href="/productos/">Productos</a>
-      <a href="/categorias/">Categorías</a>
-      <a href="/contacto/">Contacto</a>
+      <a href={base}>Inicio</a>
+      <a href={`${base}nosotros/`}>Nosotros</a>
+      <a href={`${base}productos/`}>Productos</a>
+      <a href={`${base}categorias/`}>Categorías</a>
+      <a href={`${base}contacto/`}>Contacto</a>
     </div>
     <div class="footer-col">
       <h4>Ayuda</h4>
-      <a href="/contacto/">Envíos y entregas</a>
-      <a href="/contacto/">Devoluciones</a>
-      <a href="/contacto/">Preguntas frecuentes</a>
-      <a href="/contacto/">Garantía</a>
+      <a href={`${base}contacto/`}>Envíos y entregas</a>
+      <a href={`${base}contacto/`}>Devoluciones</a>
+      <a href={`${base}contacto/`}>Preguntas frecuentes</a>
+      <a href={`${base}contacto/`}>Garantía</a>
     </div>
     <div class="footer-col">
       <h4>Contacto</h4>
